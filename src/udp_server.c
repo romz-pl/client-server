@@ -25,7 +25,8 @@ int main( int argc, char *argv[] )
     socklen_t fromlen;
     struct sockaddr_in server;
     struct sockaddr_in from;
-    char buf[ 1024 ];
+    const size_t buf_lenght = 1024;
+    char buf[ buf_lenght ];
 
     if( argc < 2 )
     {
@@ -51,7 +52,7 @@ int main( int argc, char *argv[] )
     fromlen = sizeof( struct sockaddr_in );
     while( 1 )
     {
-        n = recvfrom( sock, buf, 1024, 0, (struct sockaddr*)&from, &fromlen );
+        n = recvfrom( sock, buf, buf_lenght, 0, (struct sockaddr*)&from, &fromlen );
         if( n < 0 )
         {
             error( "recvfrom" );

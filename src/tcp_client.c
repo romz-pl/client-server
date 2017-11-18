@@ -7,20 +7,22 @@
 #include <netinet/in.h>
 #include <netdb.h> 
 
-void error(const char *msg)
+void error( const char *msg )
 {
-    perror(msg);
-    exit(0);
+    perror( msg );
+    exit( 0 );
 }
 
-int main(int argc, char *argv[])
+int main( int argc, char *argv[] )
 {
     int sockfd, portno;
     ssize_t n;
     struct sockaddr_in serv_addr;
     struct hostent *server;
 
-    char buffer[ 256 ];
+    const size_t buffer_length = 256;
+
+    char buffer[ buffer_length ];
     if( argc < 3 ) 
     {
        fprintf( stderr, "usage %s hostname port\n", argv[ 0 ] );
@@ -50,15 +52,15 @@ int main(int argc, char *argv[])
         error("ERROR connecting");
     }
     printf( "Please enter the message: " );
-    bzero( buffer, 256 );
-    fgets( buffer, 255, stdin );
+    bzero( buffer, buffer_length );
+    fgets( buffer, buffer_length - 1, stdin );
     n = write( sockfd, buffer, strlen( buffer ) );
     if( n < 0 )
     { 
          error("ERROR writing to socket");
     }
-    bzero( buffer, 256 );
-    n = read( sockfd, buffer, 255 );
+    bzero( buffer, buffer_length );
+    n = read( sockfd, buffer, buffer_length - 1 );
     if( n < 0 )
     {
          error( "ERROR reading from socket" );
