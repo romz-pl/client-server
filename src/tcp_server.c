@@ -81,7 +81,7 @@ int main(int argc, char *argv[])
  *****************************************/
 void dostuff( int sock )
 {
-    int n;
+    ssize_t n;
     char buffer[ 256 ];
       
     bzero( buffer, 256 );
