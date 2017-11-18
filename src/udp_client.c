@@ -13,7 +13,8 @@ void error( const char * );
 
 int main( int argc, char *argv[] )
 {
-	int sock, n;
+	int sock;
+    ssize_t n;
 	unsigned int length;
 	struct sockaddr_in server, from;
 	struct hostent *hp;
@@ -37,7 +38,7 @@ int main( int argc, char *argv[] )
         error( "Unknown host" );
     }
 
-	bcopy( (char *)hp->h_addr, (char *)&server.sin_addr, hp->h_length );
+	bcopy( (char *)hp->h_addr, (char *)&server.sin_addr, (size_t)hp->h_length );
 	server.sin_port = htons( atoi( argv[ 2 ] ) );
 	length = sizeof( struct sockaddr_in );
 	printf( "Please enter the message: " );
@@ -54,7 +55,7 @@ int main( int argc, char *argv[] )
         error( "recvfrom" );
     }
 	write( 1, "Got an ack: ", 12 );
-	write( 1, buffer, n );
+	write( 1, buffer, (size_t)n );
 	close( sock );
 	return 0;
 }
