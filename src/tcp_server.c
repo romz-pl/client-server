@@ -81,11 +81,12 @@ int main(int argc, char *argv[])
  *****************************************/
 void dostuff( int sock )
 {
+    const size_t buffer_length = 256;
     ssize_t n;
-    char buffer[ 256 ];
-      
-    bzero( buffer, 256 );
-    n = read( sock, buffer, 255 );
+
+    char buffer[ buffer_length ];
+    bzero( buffer, buffer_length );
+    n = read( sock, buffer, buffer_length - 1 );
     if( n < 0 )
     {
         error( "ERROR reading from socket" );
