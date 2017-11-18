@@ -19,7 +19,9 @@ void error( const char *msg )
 
 int main( int argc, char *argv[] )
 {
-    int sock, length, n;
+    int sock;
+    ssize_t n;
+    size_t length;
     socklen_t fromlen;
     struct sockaddr_in server;
     struct sockaddr_in from;
@@ -41,7 +43,7 @@ int main( int argc, char *argv[] )
     server.sin_family = AF_INET;
     server.sin_addr.s_addr = INADDR_ANY;
     server.sin_port = htons( atoi( argv[ 1 ] ) );
-    if( bind( sock, (struct sockaddr *)&server, length ) < 0 ) 
+    if( bind( sock, (struct sockaddr *)&server, (socklen_t)length ) < 0 ) 
     {
         error( "binding" );
     }
@@ -55,7 +57,7 @@ int main( int argc, char *argv[] )
             error( "recvfrom" );
         }
         write( 1, "Received a datagram: ", 21 );
-        write( 1, buf, n );
+        write( 1, buf, (size_t)n );
         n = sendto( sock, "Got your message\n", 17, 0, (struct sockaddr*)&from, fromlen );
         if( n  < 0 ) 
         {
