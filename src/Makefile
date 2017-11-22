@@ -15,6 +15,8 @@ SOURCE := tcp_client.c
 SOURCE += tcp_echo_client.c
 SOURCE += tcp_echo_server.c
 SOURCE += tcp_server.c
+SOURCE += udp_echo_client.c
+SOURCE += udp_echo_server.c
 SOURCE += udp_client.c
 SOURCE += udp_server.c
 
